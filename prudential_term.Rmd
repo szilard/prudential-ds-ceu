@@ -22,7 +22,7 @@ The goal is well summarized as *“developing a predictive model that accurately
 
 The data
 --------------------
-By the nature of the Kaggle completion I got no full description of the features in the trainset. This makes the feature engineering harder or less effective, because I cannot really use much domain knowledge to make strong predictors. 
+By the nature of the Kaggle competitions, I got no full description of the features in the train set. This makes the feature engineering harder or less effective, because I cannot really use much domain knowledge to create strong predictors. 
 
 Description of the columns in the trains set:
 
@@ -143,7 +143,7 @@ dim(testlocal)
 str(trainlocal,list.len=ncol(trainlocal))
 ```
 
-For further more comprehensive statistics is presented in the Appendix.
+A more comprehensive statistics is presented in the Appendix.
 
 The backbone of my toolset for this task was R (Ver. 3.2.3) and H2O server (Build 3.6.0.8). For exploring the data I could use both of these tools, but I used mostly the H2O dashboard, because with 100+ features I found more comfortable to quickly access any time any statistics. 
 
@@ -169,7 +169,7 @@ A lots of missing values, strong presence on both ends. Create a binary feature,
 summary(trainlocal$Medical_History_15)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_15),na.rm = TRUE,binwidth = 7,fill="limegreen") 
+ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_15),na.rm = TRUE,binwidth = 7,fill="#619cff") 
 ```
 
 
@@ -181,7 +181,7 @@ Similar to the previous is this one, a lot of missing data, but the splitting wo
 summary(trainlocal$Medical_History_24)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,binwidth = 7,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,binwidth = 7,fill="#619cff")
 ```
 
 
@@ -190,7 +190,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,bin
 Character codes, code to numbers, alternatively create feature out of the first and second character 
 
 ```{r}
-ggplot(trainlocal) + geom_bar(aes(x = Product_Info_2),na.rm = TRUE,fill="limegreen" ) 
+ggplot(trainlocal) + geom_bar(aes(x = Product_Info_2),na.rm = TRUE,fill="#619cff" ) 
 ```
 
 
@@ -202,7 +202,7 @@ Action: Create binary, eg. separate at 0.75
 summary(trainlocal$Product_Info_4)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Product_Info_4),bins  = 30,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = Product_Info_4),bins  = 30,fill="#619cff")
 ```
 
 
@@ -214,7 +214,7 @@ BMI means different for different age groups, so a new feature with the interact
 summary(trainlocal$BMI)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30,fill="#619cff")
 ```
 
 
@@ -224,7 +224,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30,fill="limegreen")
 summary(trainlocal$Ins_Age)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Ins_Age),bins  = 30,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = Ins_Age),bins  = 30,fill="#619cff")
 ```
 
 ###Predictor: Family_Hist_2
@@ -235,7 +235,7 @@ A lots of missing data in both, nice distribution on the rest, product of these 
 summary(trainlocal$Family_Hist_2)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 30,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 30,fill="#619cff")
 ```
 ###Predictor: Family_Hist_4
 
@@ -243,7 +243,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 3
 summary(trainlocal$Family_Hist_4)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_4),na.rm = TRUE,bins  = 30,fill="limegreen")
+ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_4),na.rm = TRUE,bins  = 30,fill="#619cff")
 
 ```
 
@@ -348,6 +348,7 @@ SQWKfun = function(x = seq(1.5, 7.5, by = 1), preds,trues) {
   return(-err)
 }
 
+
 #evaluate model and calculate optimal cutting
 eval = function(model,train,trainf,mytest,mytestf) {
   
@@ -364,12 +365,13 @@ eval = function(model,train,trainf,mytest,mytestf) {
 }
 
 ```
+###H2o server and data upload
 
-Init h2o server. As you can see i built a cluster with 2 nodes.
+My machine learning engine was mainly a remote h2o server. I played around with a 3 node cluster, but it turned out that as long as the data sets fits in the memory it is better to do on one node, because the transaction overhead between the nodes is higher than gain of having more CPU cores. The server i used was pretty powerful anyway, 32 CPU cores and 256G RAM is more than an average home use. To speed up my analysis is used multiple variations of the codes against multiple single nodes.
 
 ```{r}
-#h2o.init(ip="solr2.dev.thomascook.io", port=54321, max_mem_size = "64g", nthreads = -1,startH2O = FALSE)
-h2o.init(max_mem_size = "4g", nthreads = -1)
+h2o.init(ip="solr2.dev.thomascook.io", port=54321, max_mem_size = "64g", nthreads = -1,startH2O = FALSE)
+#h2o.init(max_mem_size = "4g", nthreads = -1)
 
 #define set sizes
 validrows <- 5000
@@ -428,8 +430,8 @@ independentVariables = names(train)[3:ncol(train)-1]
 dependentVariable = names(train)[ncol(train)]
 ```
 
-Random Forest
---------------------
+###Random Forest
+
 
 Being the simplest model, with few tuning parameters, first I tried the Random Forest.
 
@@ -439,7 +441,7 @@ Being the simplest model, with few tuning parameters, first I tried the Random F
 system.time({
 modelRF <- h2o.randomForest(x = independentVariables, y = dependentVariable, 
                           seed = 1976,training_frame = train, validation_frame=valid,
-                          mtries = -1, ntrees = 100, max_depth = 20, nbins = 200)
+                          mtries = -1, ntrees =300, max_depth = 20, nbins = 200)
 })
 ```
 
@@ -450,8 +452,8 @@ print(mseRF)
 errRF <- eval(modelRF,train,trainf,mytest,mytestf) 
 ```
 
-GBM
---------------------
+###GBM
+
 
 My second model GBM which was meant to beat RF. Later I tuned this model with grid search, what I present here is already the tuned model.
 
@@ -459,7 +461,7 @@ My second model GBM which was meant to beat RF. Later I tuned this model with gr
 #gbm
 system.time({
 modelGBM <- h2o.gbm(x=independentVariables, y=dependentVariable, seed = 1976,training_frame = train, validation_frame=valid,
-                 learn_rate=0.035, max_depth=11, nbins=20, ntrees=100, sample_rate=0.6,min_rows=10,stopping_rounds = 3)
+                 learn_rate=0.035, max_depth=11, nbins=20, ntrees =300, sample_rate=0.6,min_rows=10,stopping_rounds = 3)
 })
 ```
 
@@ -470,8 +472,8 @@ print(mseGBM)
 errGBM <- eval(modelGBM,train,trainf,mytest,mytestf)
 ```
 
-GBM Grid
---------------------
+###GBM Grid
+
 
 I run several grid searches, first I started with large intervals and bigger gaps and I iteratively converged to the ideal settings.
 
@@ -480,10 +482,10 @@ I run several grid searches, first I started with large intervals and bigger gap
 system.time({
 modelGrid <- h2o.grid("gbm", x = independentVariables, y = dependentVariable, 
                   training_frame = train, validation_frame = valid,
-                  hyper_params = list(ntrees = 100,
+                  hyper_params = list(ntrees = 50,
                                       max_depth = c(8),
-                                      learn_rate = c(0.015,0.02, 0.025),
-                                      nbins = c(20,150),
+                                      learn_rate = c(0.03, 0.035),
+                                      nbins = c(20),
                                       min_rows = c(3,10),
                                       sample_rate=c(0.6,1),
                                       seed=1976),
@@ -511,8 +513,8 @@ gridResult
 
 ```
 
-GBM with cross validation
---------------------
+###GBM with cross validation
+
 
 The advantage of cross validation is that we don't need validation data, so I can train my model on a larger dataset and still I can avoid over fitting. Using larger data, the expectation is to have a better model.
 
@@ -542,7 +544,7 @@ mytest$Product_Info_2_num <- as.numeric(mytest$Product_Info_2_num)
 ```{r results='hide'}
 
 modelGBMCV <- h2o.gbm(x=independentVariables, y=dependentVariable, seed = 1976,training_frame = train, 
-                  learn_rate=0.035, max_depth=11, nbins=20, ntrees=100, sample_rate=0.6,min_rows=10,nfolds = 5,stopping_rounds = 3)
+                  learn_rate=0.035, max_depth=11, nbins=20, ntrees =300, sample_rate=0.6,min_rows=10,nfolds = 5,stopping_rounds = 3)
 
 
 ```
@@ -554,9 +556,9 @@ print(mseGBMCV)
 errGBMCV <- eval(modelGBMCV,train,trainlocal,mytest,mytestf)
 ```
 
-The performance of the different models
---------------------
+###Performance of various models
 
+As expected in the GMBCV obtained the highest QuadraticWeightedKappa Score, even though the train MSE was a bit higher than for GBM. (Worth to study: is it generally the cross fold MSE higher than the dedicated MSE ? ) The random forest was not really able to obtain a low MSE, so the  QuadraticWeightedKappa Score was accordingly lower than the rest.
 
 ```{r echo=FALSE}
 
@@ -565,89 +567,89 @@ msetrain <- c(h2o.mse(modelRF,train=TRUE), h2o.mse(modelGBM,train=TRUE), h2o.mse
 msevalid <- c(h2o.mse(modelRF,valid=TRUE), h2o.mse(modelGBM,valid=TRUE), h2o.mse(modelGBMCV,xval=TRUE))
 swq <- c(errRF, errGBM, errGBMCV)
 
+
 labels <- c("RF","GBM","GBMCV")
 
 df <- data.frame(x=c(1:3),msevalid,msetrain,swq,labels)
 
+df
 
-ggplot(df) + geom_bar(aes(as.factor(labels),msevalid, fill = as.factor(labels)),stat = "identity") + xlab("Model Type") + ylab("Training MSE") + ggtitle("Training MSE") + scale_fill_discrete(name = "")
+ggplot(df) + geom_bar(aes(as.factor(labels),msetrain, fill = as.factor(labels)),stat = "identity") + xlab("") + ylab("Training MSE") + ggtitle("Training MSE") + scale_fill_discrete(name = "") + geom_text(aes(as.factor(labels),msetrain,label = format(msetrain,digits = 5),fontface = "bold"), color="black", hjust=0.5, vjust = 2)
 
-ggplot(df) + geom_bar(aes(as.factor(labels),msetrain, fill = as.factor(labels)),stat = "identity") + xlab("Model Type") + ylab("Training MSE") + ggtitle("Validation MSE") + scale_fill_discrete(name = "")
+ggplot(df) + geom_bar(aes(as.factor(labels),msevalid, fill = as.factor(labels)),stat = "identity") + xlab("") + ylab("Validation MSE") + ggtitle("Validation MSE") + scale_fill_discrete(name = "") + geom_text(aes(as.factor(labels),msevalid,label = format(msevalid,digits = 5),fontface = "bold"), color="black", hjust=0.5, vjust = 2)
 
-ggplot(df) + geom_bar(aes(as.factor(labels),swq, fill = as.factor(labels)),stat = "identity") + xlab("Model Type") + ylab("Quadratic Weighted Kappa") + ggtitle("Quadratic Weighted Kappa") + scale_fill_discrete(name = "")
+ggplot(df) + geom_bar(aes(as.factor(labels),swq, fill = as.factor(labels)),stat = "identity") + xlab("") + ylab("Quadratic Weighted Kappa") + ggtitle("Quadratic Weighted Kappa Score") + scale_fill_discrete(name = "") + geom_text(aes(as.factor(labels),swq,label = format(swq,digits = 5),fontface = "bold"), color="black", hjust=0.5, vjust = 2)
 
 ```
 
-Ensembles
---------------------
+###Ensembles
+
 
 My final model was an ensemble of models, of 3 types: Random Forest, GBM and Deep Learning. The get the right parameters for the first and the second I used grid search, similar to the previous one. For deep learning I had no time to play around, because the competition was about to close, so I used the recommended settings from the h2o ensemble tutorial.
 
 For the so called metalearner, I first used "SL.glm" from the SuperLearner packages, but it turned out that the h2o deep learning outperforms it. (this was not the case few month back)
 
-To build my final ensemble took around 6 hour, so I could not have to much window to play around with the setup. Even so, this was the best performing model I made in this study.
+To build my final ensemble took around 6 hours, so I did not had too much window to play around with the setup. Even so, this was the best performing model I made in this study. (The code below uses smaller trees to able the create this report in fashionable time)
 
 First I had to define the model wrappers. In my initial code, this was wrapper generation was dynamic (See appendix), but for some reason I was not able to make it work with Rmarkdown, so on the end I copied in the Rmarkdown, the output of the dynamic functions.
 
 
 ```{r}
 
-h2o.rf.11 <- function(..., ntrees =100, nbins = 20,seed = 1,sample_rate = 0.1) 
+h2o.rf.11 <- function(..., ntrees =5, nbins = 20,seed = 1,sample_rate = 0.1) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.12 <- function(..., ntrees =100, nbins = 20,seed = 1,sample_rate = 0.632) 
+h2o.rf.12 <- function(..., ntrees =5, nbins = 20,seed = 1,sample_rate = 0.632) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.13 <- function(..., ntrees =100, nbins = 20,seed = 1,sample_rate = 0.9) 
+h2o.rf.13 <- function(..., ntrees =5, nbins = 20,seed = 1,sample_rate = 0.9) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.21 <- function(..., ntrees =100, nbins = 100,seed = 1,sample_rate = 0.1) 
+h2o.rf.21 <- function(..., ntrees =5, nbins = 100,seed = 1,sample_rate = 0.1) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.22 <- function(..., ntrees =100, nbins = 100,seed = 1,sample_rate = 0.632) 
+h2o.rf.22 <- function(..., ntrees =5, nbins = 100,seed = 1,sample_rate = 0.632) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.23 <- function(..., ntrees =100, nbins = 100,seed = 1,sample_rate = 0.9) 
+h2o.rf.23 <- function(..., ntrees =5, nbins = 100,seed = 1,sample_rate = 0.9) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.31 <- function(..., ntrees =100, nbins = 200,seed = 1,sample_rate = 0.1) 
+h2o.rf.31 <- function(..., ntrees =5, nbins = 200,seed = 1,sample_rate = 0.1) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.32 <- function(..., ntrees =100, nbins = 200,seed = 1,sample_rate = 0.632) 
+h2o.rf.32 <- function(..., ntrees =5, nbins = 200,seed = 1,sample_rate = 0.632) 
   h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
-h2o.rf.33 <- function(..., ntrees =100, nbins = 200,seed = 1,sample_rate = 0.9) h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
+h2o.rf.33 <- function(..., ntrees =5, nbins = 200,seed = 1,sample_rate = 0.9) h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)
 
 
-h2o.gbm.11 <- function(..., learn_rate=0.02, ntrees =100, nbins=20, sample_rate=0.6, max_depth =9)
+h2o.gbm.11 <- function(..., learn_rate=0.02, ntrees =5, nbins=20, sample_rate=0.6, max_depth =9)
   h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth = max_depth,sample_rate=sample_rate)
-h2o.gbm.12 <- function(..., learn_rate=0.035, ntrees =100, nbins=20, sample_rate=0.6, max_depth =9)
+h2o.gbm.12 <- function(..., learn_rate=0.035, ntrees =5, nbins=20, sample_rate=0.6, max_depth =9)
   h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth = max_depth,sample_rate=sample_rate)
-h2o.gbm.21 <- function(..., learn_rate=0.02, ntrees =100, nbins=20, sample_rate=0.6, max_depth =11)
+h2o.gbm.21 <- function(..., learn_rate=0.02, ntrees =5, nbins=20, sample_rate=0.6, max_depth =11)
   h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth = max_depth,sample_rate=sample_rate)
-h2o.gbm.22 <- function(..., learn_rate=0.035, ntrees =100, nbins=20, sample_rate=0.6, max_depth =11)
+h2o.gbm.22 <- function(..., learn_rate=0.035, ntrees =5, nbins=20, sample_rate=0.6, max_depth =11)
   h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth = max_depth,sample_rate=sample_rate)
 
 
-h2o.deeplearning.1 <- function(..., hidden = c(500,500), activation = "Rectifier", epochs = 50, seed = 1)  
+h2o.deeplearning.1 <- function(..., hidden = c(500,500), activation = "Rectifier", epochs = 20, seed = 1)  
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.2 <- function(..., hidden = c(200,200,200), activation = "Tanh", epochs = 50, seed = 1)  
+h2o.deeplearning.2 <- function(..., hidden = c(200,200,200), activation = "Tanh", epochs = 20, seed = 1)  
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.3 <- function(..., hidden = c(500,500), activation = "RectifierWithDropout", epochs = 50, seed = 1)
+h2o.deeplearning.3 <- function(..., hidden = c(500,500), activation = "RectifierWithDropout", epochs = 20, seed = 1)
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.4 <- function(..., hidden = c(500,500), activation = "Rectifier", epochs = 50, seed = 1)  
+h2o.deeplearning.4 <- function(..., hidden = c(500,500), activation = "Rectifier", epochs = 20, seed = 1)  
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.5 <- function(..., hidden = c(100,100,100), activation = "Rectifier", epochs = 50, seed = 1)  h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.6 <- function(..., hidden = c(50,50), activation = "Rectifier", epochs = 50, seed = 1)  
+h2o.deeplearning.5 <- function(..., hidden = c(100,100,100), activation = "Rectifier", epochs = 20, seed = 1)  h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
+h2o.deeplearning.6 <- function(..., hidden = c(50,50), activation = "Rectifier", epochs = 20, seed = 1)  
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
-h2o.deeplearning.7 <- function(..., hidden = c(100,100), activation = "Rectifier", epochs = 50, seed = 1)  
+h2o.deeplearning.7 <- function(..., hidden = c(100,100), activation = "Rectifier", epochs = 20, seed = 1)  
   h2o.deeplearning.wrapper(..., hidden = hidden, activation = activation, seed = seed)
 ```
 
 After i uploaded again the train set (this time the whole train data) i built the ensemble: 
 
 ```{r results='hide'}
-# learner <- c("h2o.rf.11","h2o.rf.12","h2o.rf.13","h2o.rf.21","h2o.rf.22","h2o.rf.23","h2o.rf.31","h2o.rf.32","h2o.rf.33","h2o.gbm.11","h2o.gbm.12","h2o.gbm.21","h2o.gbm.22","h2o.deeplearning.1","h2o.deeplearning.2","h2o.deeplearning.3","h2o.deeplearning.4","h2o.deeplearning.5","h2o.deeplearning.6","h2o.deeplearning.7")
-
-
 
 train <- as.h2o(trainlocal)
 train$Product_Info_2_char <- as.numeric(train$Product_Info_2_char)
 train$Product_Info_2_num <- as.numeric(train$Product_Info_2_num)
 
-learner <- c("h2o.rf.11","h2o.gbm.11")
+learner <- c("h2o.rf.11","h2o.rf.12","h2o.rf.13","h2o.rf.21","h2o.rf.22","h2o.rf.23","h2o.rf.31","h2o.rf.32","h2o.rf.33","h2o.gbm.11","h2o.gbm.12","h2o.gbm.21","h2o.gbm.22","h2o.deeplearning.1","h2o.deeplearning.5","h2o.deeplearning.6","h2o.deeplearning.7")
+
 metalearner <- c("h2o.deeplearning.wrapper")
 
 
@@ -693,7 +695,7 @@ This analysis proved some points discussed in the class:
 
 * Kaggle is good to learn, but it is not the complete picture
 
-As about the Kaggle result, I submitted 28 models, the first two was realy a wild guess, one had an error, but the rest show the evolution of my models:
+As about the Kaggle result, I submitted 28 models, the graph shows the evolution of my models:
 
 
 ```{r echo=FALSE}
@@ -704,17 +706,15 @@ scores = rev(c(0.67125,0.66941,0.66839,0.6633,0.66814,0.6638,0.66812,0.6683,0.66
 df <- data.frame(x=c(1:26),scores)
 
 
-ggplot(df) + geom_bar(aes(x,scores),stat = "identity", fill="limegreen") + xlab("") + ylab("Score") + ggtitle("Score") + scale_fill_discrete(name = "")
-
-
-
+ggplot(df) + geom_bar(aes(x,scores),stat = "identity", fill="#619cff") + xlab("") + ylab("Score") + ggtitle("Score") + scale_fill_discrete(name = "")+ coord_cartesian(ylim = c(0.48,0.68)) +   geom_text(aes(x,scores,label = scores,angle = 90,fontface = "bold"), color="black", hjust=1.05, vjust = 0)
+  
 ```
 
 These were mostly single GBM with CV, Deep Learning, Ensembles and XgBoost (code: https://github.com/salacika/prudential-ds-ceu/blob/master/xg_final.R) 
 
-My aim to finish in top 25% was achieved by end of the competition, I ranked 668/2715, but then the second test with larger data came and many fall behind with over fitted models, so I end up as 232/2715 which is already top 10%: https://www.kaggle.com/salacika/results
+My aim to finish in top 25% was achieved, by the end of the competition, I ranked 668/2715. Then the second test with larger data came and many fall behind with over fitted models, so I end up as 214/2715 which is already top 10%: https://www.kaggle.com/salacika/results
 
-The winner of the competition got 0.67939, my score with the first test was 0.67113 and then 0.67125 with second one (it seems my model was flexible enough, slight over fit maybe). 
+The winner of the competition got 0.67939, my score with the first test was 0.67125 and then 0.67108 with second one (it seems my model was flexible enough, a slight over fit maybe). 
 
 It was a great fun, I plan do it again as soon as have time!
 
@@ -749,7 +749,9 @@ create_h2o_gbm_wrappers <- function(max_depths = c(8,9,10),learn_rates = c(0.02,
     for (j in seq(length(learn_rates))) {
       max_depth <- max_depths[i]
       learn_rate <- learn_rates[j]
-      body <- sprintf(' <- function(..., learn_rate=%s, ntrees = 2, nbins=20, sample_rate=0.6, max_depth =%s) h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth = max_depth,sample_rate=sample_rate)',learn_rate, max_depth)
+      body <- sprintf(' <- function(..., learn_rate=%s, ntrees = 500, nbins=20, sample_rate=0.6, max_depth =%s)
+        h2o.gbm.wrapper(...,learn_rate=learn_rate, ntrees = ntrees, nbins = nbins, max_depth =
+          max_depth,sample_rate=sample_rate)',learn_rate, max_depth)
       eval(parse(text = paste('h2o.gbm.', i,j, body, sep = '')), envir = .GlobalEnv)
       h2o_gbm_wrappers <- c(h2o_gbm_wrappers,paste('h2o.gbm.', i,j, sep = ''))
     }
@@ -769,7 +771,8 @@ create_h2o_rf_wrappers <- function(nbins = c(20,100,200),sample_rates = c(0.1, 0
     for (j in seq(length(sample_rates))) {
       nbin <- nbins[i]
       sample_rate <- sample_rates[j]
-      body <- sprintf(' <- function(..., ntrees =2, nbins = %s,seed = 1,sample_rate = %s) h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)', nbin,sample_rate)
+      body <- sprintf(' <- function(..., ntrees =250, nbins = %s,seed = 1,sample_rate = %s) 
+        h2o.randomForest.wrapper(..., ntrees = ntrees, nbins = nbins,sample_rate = sample_rate, seed = seed)', nbin,sample_rate)
       eval(parse(text = paste('h2o.rf.', i,j, body, sep = '')), envir = .GlobalEnv)
       print(eval(parse(text = paste('h2o.rf.', i,j, body, sep = '')), envir = .GlobalEnv))
       h2o_rf_wrappers <- c(h2o_rf_wrappers,paste('h2o.gbm.', i,j, sep = ''))
