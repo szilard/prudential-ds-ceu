@@ -370,8 +370,8 @@ eval = function(model,train,trainf,mytest,mytestf) {
 My machine learning engine was mainly a remote h2o server. I played around with a 3 node cluster, but it turned out that as long as the data sets fits in the memory it is better to do on one node, because the transaction overhead between the nodes is higher than gain of having more CPU cores. The server i used was pretty powerful anyway, 32 CPU cores and 256G RAM is more than an average home use. To speed up my analysis is used multiple variations of the codes against multiple single nodes.
 
 ```{r}
-h2o.init(ip="xxx2.dev.xxxx.io", port=54321, max_mem_size = "64g", nthreads = -1,startH2O = FALSE)
-#h2o.init(max_mem_size = "4g", nthreads = -1)
+#h2o.init(ip="xxx2.dev.xxxx.io", port=54321, max_mem_size = "64g", nthreads = -1,startH2O = FALSE)
+h2o.init(max_mem_size = "4g", nthreads = -1)
 
 #define set sizes
 validrows <- 5000
