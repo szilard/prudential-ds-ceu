@@ -169,7 +169,7 @@ A lots of missing values, strong presence on both ends. Create a binary feature,
 summary(trainlocal$Medical_History_15)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_15),na.rm = TRUE,binwidth = 7 ) 
+ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_15),na.rm = TRUE,binwidth = 7,fill="limegreen") 
 ```
 
 
@@ -181,7 +181,7 @@ Similar to the previous is this one, a lot of missing data, but the splitting wo
 summary(trainlocal$Medical_History_24)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,binwidth = 7 )
+ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,binwidth = 7,fill="limegreen")
 ```
 
 
@@ -190,7 +190,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = Medical_History_24),na.rm = TRUE,bin
 Character codes, code to numbers, alternatively create feature out of the first and second character 
 
 ```{r}
-ggplot(trainlocal) + geom_bar(aes(x = Product_Info_2),na.rm = TRUE ) 
+ggplot(trainlocal) + geom_bar(aes(x = Product_Info_2),na.rm = TRUE,fill="limegreen" ) 
 ```
 
 
@@ -202,7 +202,7 @@ Action: Create binary, eg. separate at 0.75
 summary(trainlocal$Product_Info_4)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Product_Info_4),bins  = 30)
+ggplot(trainlocal) + geom_histogram(aes(x = Product_Info_4),bins  = 30,fill="limegreen")
 ```
 
 
@@ -214,7 +214,7 @@ BMI means different for different age groups, so a new feature with the interact
 summary(trainlocal$BMI)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30)
+ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30,fill="limegreen")
 ```
 
 
@@ -224,7 +224,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = BMI),bins  = 30)
 summary(trainlocal$Ins_Age)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Ins_Age),bins  = 30)
+ggplot(trainlocal) + geom_histogram(aes(x = Ins_Age),bins  = 30,fill="limegreen")
 ```
 
 ###Predictor: Family_Hist_2
@@ -235,7 +235,7 @@ A lots of missing data in both, nice distribution on the rest, product of these 
 summary(trainlocal$Family_Hist_2)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 30)
+ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 30,fill="limegreen")
 ```
 ###Predictor: Family_Hist_4
 
@@ -243,7 +243,7 @@ ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_2),na.rm = TRUE,bins = 3
 summary(trainlocal$Family_Hist_4)
 ```
 ```{r}
-ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_4),na.rm = TRUE,bins  = 30)
+ggplot(trainlocal) + geom_histogram(aes(x = Family_Hist_4),na.rm = TRUE,bins  = 30,fill="limegreen")
 
 ```
 
@@ -704,13 +704,13 @@ scores = rev(c(0.67125,0.66941,0.66839,0.6633,0.66814,0.6638,0.66812,0.6683,0.66
 df <- data.frame(x=c(1:26),scores)
 
 
-ggplot(df) + geom_bar(aes(x,scores),stat = "identity", fill="orange") + xlab("") + ylab("Score") + ggtitle("Score") + scale_fill_discrete(name = "")
+ggplot(df) + geom_bar(aes(x,scores),stat = "identity", fill="limegreen") + xlab("") + ylab("Score") + ggtitle("Score") + scale_fill_discrete(name = "")
 
 
 
 ```
 
-These were mostly single GBM with CV, Deep Learning, Ensembles and XgBoost (code: ) 
+These were mostly single GBM with CV, Deep Learning, Ensembles and XgBoost (code: https://github.com/salacika/prudential-ds-ceu/blob/master/xg_final.R) 
 
 My aim to finish in top 25% was achieved by end of the competition, I ranked 668/2715, but then the second test with larger data came and many fall behind with over fitted models, so I end up as 232/2715 which is already top 10%: https://www.kaggle.com/salacika/results
 
