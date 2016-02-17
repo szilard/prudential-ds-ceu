@@ -712,7 +712,7 @@ ggplot(df) + geom_bar(aes(x,scores),stat = "identity", fill="#619cff") + xlab(""
 
 These were mostly single GBM with CV, Deep Learning, Ensembles and XgBoost (code: https://github.com/salacika/prudential-ds-ceu/blob/master/xg_final.R) 
 
-My aim to finish in top 25% was achieved, by the end of the competition, I ranked 668/2715. Then the second test with larger data came and many fall behind with over fitted models, so I end up as 214/2715 which is already top 10%: https://www.kaggle.com/salacika/results
+My aim to finish in top 25% was achieved, by the end of the competition, I ranked 638/2715. Then the second test with larger data came and many fall behind with over fitted models, so I end up as 214/2715 which is already top 10%: https://www.kaggle.com/salacika/results
 
 The winner of the competition got 0.67939, my score with the first test was 0.67125 and then 0.67108 with second one (it seems my model was flexible enough, a slight over fit maybe). 
 
