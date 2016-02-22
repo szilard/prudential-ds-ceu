@@ -489,8 +489,8 @@ eval = function(model,train,trainf,mytest,mytestf) {
 <div id="h2o-server-and-data-upload" class="section level3">
 <h3>H2o server and data upload</h3>
 <p>My machine learning engine was mainly a remote h2o server. I played around with a 3 node cluster, but it turned out that as long as the data sets fits in the memory it is better to do on one node, because the transaction overhead between the nodes is higher than gain of having more CPU cores. The server i used was pretty powerful anyway, 32 CPU cores and 256G RAM is more than an average home use. To speed up my analysis is used multiple variations of the codes against multiple single nodes.</p>
-<pre class="r"><code>h2o.init(ip=&quot;solr2.dev.thomascook.io&quot;, port=54321, max_mem_size = &quot;64g&quot;, nthreads = -1,startH2O = FALSE)</code></pre>
-<pre><code>## Successfully connected to http://solr2.dev.thomascook.io:54321/ 
+<pre class="r"><code>h2o.init(ip=&quot;xxx2.dev.xxxx.io&quot;, port=54321, max_mem_size = &quot;64g&quot;, nthreads = -1,startH2O = FALSE)</code></pre>
+<pre><code>## Successfully connected to http://xxx2.dev.xxxx.io:54321/ 
 ## 
 ## R is connected to the H2O cluster: 
 ##     H2O cluster uptime:         6 days 12 hours 
@@ -501,7 +501,7 @@ eval = function(model,train,trainf,mytest,mytestf) {
 ##     H2O cluster total cores:    32 
 ##     H2O cluster allowed cores:  32 
 ##     H2O cluster healthy:        TRUE</code></pre>
-<pre><code>## IP Address: solr2.dev.thomascook.io 
+<pre><code>## IP Address: xxx2.dev.xxxx.io 
 ## Port      : 54321 
 ## Session ID: _sid_a4379d61ad2a4a1ea619fd134b0e4912 
 ## Key Count : 0</code></pre>
