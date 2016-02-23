@@ -19,5 +19,8 @@ it and play with it, then start over.
 - Kaggle is good to learn, but it is not the complete picture
 ```
 
-Also, Laszlo has competed in the [Prudential Kaggle competition](https://www.kaggle.com/c/prudential-life-insurance-assessment) and **has finished in the top 10%** (congratulations!). Also note that he had advanced 400+ places from the public leaderboard to the 
-[private one](https://www.kaggle.com/c/prudential-life-insurance-assessment/leaderboard/private), an excellent sign that he has applied well the techniques we discussed in class that help you avoid overfitting (unlike many other Kaggle competitors who have overfit the public test set and have moved downwards in rank).
+Laszlo has competed in the [Prudential Kaggle competition](https://www.kaggle.com/c/prudential-life-insurance-assessment) 
+and **has finished in the top 10% (congratulations!)**. Also note that he had advanced 400+ places from the public
+leaderboard to the [private one](https://www.kaggle.com/c/prudential-life-insurance-assessment/leaderboard/private), 
+an excellent sign that he has applied well the techniques we discussed in class that help you avoid overfitting 
+(unlike many other Kaggle competitors who have overfit the public test set and have moved downwards in rank).
