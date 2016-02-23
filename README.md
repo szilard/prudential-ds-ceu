@@ -14,7 +14,6 @@ an excellent sign that he has applied well the techniques we discussed in class 
 Some important points from the report:
 ```
 This analysis proved some points discussed in the class:
-
 - Coding a data science project is completely different from other coding style. I produced at 
 least 10x more code than I present here. Coding here is really a tool the handle to data shape 
 it and play with it, then start over.
