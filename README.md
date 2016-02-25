@@ -7,14 +7,14 @@ I was teaching at CEU's new MSc in Business Analytics program.
 Laszlo has also competed in the 
 [Prudential Kaggle competition](https://www.kaggle.com/c/prudential-life-insurance-assessment) 
 and **has finished in the top 10% (congratulations!)**. Also notable that he had advanced 400+ places from the public
-leaderboard to the private one, 
+leaderboard (LB) to the private one, 
 an excellent sign that he has applied well the techniques we discussed in class that help you avoid *overfitting*.
 Many Kaggle competitors including top ones have overfit the public test set and their private LB score ended up lower
 than the public one:
 
 ![plot](kaggle_scores_analysis/pub_vs_priv_LB_kaggle_summary.png)
 
-(the top 3 kagglers on the public leaderboard /in *red* in the plot above/ have overfit and lost; the competitors in *green* have won).
+(the top 3 kagglers on the public LB /in *red* in the plot above/ have overfit and lost; the competitors in *green* have won).
 
 Some important points from Laszlo's report:
 ```
