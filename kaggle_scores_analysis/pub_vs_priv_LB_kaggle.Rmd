@@ -15,8 +15,8 @@ names(d1) <- c("r1","name1","s1")
 d1 <- d1 %>% mutate(name1 = sub("\r.*","",name1)) 
 
 d2 <- read_html(paste0(url_board,"private")) %>% 
-   html_node("table") %>% html_table() %>% select(1:4) %>% tbl_df
-names(d2) <- c("r2","dr","name2","s2")  
+   html_node("table") %>% html_table() %>% select(1:5) %>% tbl_df
+names(d2) <- c("r2","dr","name2","s2","entries")  
 d2 <- d2 %>% mutate(dr = as.numeric(sub("↓","-",sub("↑","",dr))), 
                 r1 = r2 + dr, name2 = sub("\r.*","",name2)) 
 
@@ -71,6 +71,18 @@ d %>% mutate(grp = ifelse(r2<=3,"priv LB top3",
   
 ```
 
+```{r}
+
+d %>% filter(s1>0.665, s2>0.665) %>% nrow
+
+d %>% filter(s1>0.665, s2>0.665) %>% 
+   ggplot() + geom_point(aes(x = s1, y = s2, size = entries), alpha = 0.3)
+
+d %>% filter(s1>0.665, s2>0.665) %>% 
+   ggplot() + geom_point(aes(x = entries, y = s2-s1), alpha = 0.3) 
+
+
+```
 
 
 

@@ -14,6 +14,8 @@ than the public one:
 
 ![plot](kaggle_scores_analysis/pub_vs_priv_LB_kaggle_summary.png)
 
+(the top 3 kagglers on the public leaderboard in *red* in the plot above have overfit and lost - the competitors in *green* have won).
+
 Some important points from Laszlo's report:
 ```
 This analysis proved some points discussed in the class:
